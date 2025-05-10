@@ -1,15 +1,42 @@
 {
   "name": "basin-mcp",
-  "version": "1.0.0",
-  "description": "",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "version": "1.0.3",
+  "description": "Basin AI MCP tool for code quality and reliability testing",
   "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "bin": {
+    "basin-mcp": "build/index.js"
+  },
+  "files": [
+    "build",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf build",
+    "prepublishOnly": "npm run clean && npm run build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/basin-ai/basin-mcp.git"
+  },
+  "keywords": [
+    "basin",
+    "mcp",
+    "code-quality",
+    "testing",
+    "cursor",
+    "claude",
+    "cline",
+    "ai"
+  ],
+  "author": "Basin AI",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.11.0",
     "basin-executor-lib": "^0.2.3"
