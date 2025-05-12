@@ -2,7 +2,7 @@ import { executeBasinTest, getTestPlan } from "basin-executor-lib";
 import { BASIN_HOST, CURRENT_BASIN_PROTOCOL_VERSION } from "./const.js";
 import { TestPlan } from "basin-executor-lib/dist/test_plan.js";
 
-const API_KEY = process.env.BASIN_API_KEY || "";
+const BASIN_API_KEY = process.env.BASIN_API_KEY || "";
 
 const testPlanToLogs = (testPlan: TestPlan): any[] => {
   const items = Array.isArray(testPlan.testing_instructions) ? testPlan.testing_instructions :testPlan.testing_instructions.items ? testPlan.testing_instructions.items : testPlan.testing_instructions.instruction ? testPlan.testing_instructions.instruction : [];
@@ -20,7 +20,7 @@ const testPlanToLogs = (testPlan: TestPlan): any[] => {
 const checkCodeQuality = async (args: any) => {
   const threadId = args.threadId;
   const args_dump = JSON.stringify(args);
-  const testPlan = await getTestPlan(API_KEY, args_dump, threadId, CURRENT_BASIN_PROTOCOL_VERSION, BASIN_HOST);
+  const testPlan = await getTestPlan(BASIN_API_KEY, args_dump, threadId, CURRENT_BASIN_PROTOCOL_VERSION, BASIN_HOST);
   
   if (!testPlan || !testPlan.testing_instructions) {
     return {
@@ -33,7 +33,7 @@ const checkCodeQuality = async (args: any) => {
         };
   }
   const logs = testPlanToLogs(testPlan);
-  const result = await executeBasinTest(API_KEY, testPlan, testPlan.thead_id, CURRENT_BASIN_PROTOCOL_VERSION, BASIN_HOST);
+  const result = await executeBasinTest(BASIN_API_KEY, testPlan, testPlan.thead_id, CURRENT_BASIN_PROTOCOL_VERSION, BASIN_HOST);
   if (result.logs && Array.isArray(result.logs)) logs.push(...result.logs);
   logs.push({
     type: "text",

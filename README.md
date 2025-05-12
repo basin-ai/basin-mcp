@@ -9,12 +9,12 @@ A Model Context Protocol (MCP) server for Basin AI integration that provides cod
 If your code editor supports entering custom MCP server configuration in a single field, enter the following command:
 
 ```bash
-npx -y basin-mcp@latest
+env BASIN_API_KEY=<your_api_key_here> npx -y basin-mcp@latest
 ```
 
 ![MCP settings](mcp-settings.png)
 
-Make sure to add `API_KEY` to the environment settings of the MCP server to pass the API key to the MCP server.
+Make sure to add `BASIN_API_KEY` to the environment settings of the MCP server to pass the API key to the MCP server.
 
 ### Playwright
 Basin relies on Playwright to run tests, so you may need to ensure it's installed on your computer before using Basin MCP for the first time. To install it, run the following command:
@@ -33,7 +33,7 @@ Add the following to your `mcp_config.json`:
       "command": "npx",
       "args": ["-y", "basin-mcp@latest"],
       "env": {
-        "API_KEY": "your_api_key_here"
+        "BASIN_API_KEY": "your_api_key_here"
       }
     }
   }
