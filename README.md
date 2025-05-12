@@ -4,17 +4,26 @@ A Model Context Protocol (MCP) server for Basin AI integration that provides cod
 
 ## Installation
 
-* One-line installation
+### One-line installation
 
 If your code editor supports entering custom MCP server configuration in a single field, enter the following command:
 
 ```bash
-npx -y basin-mcp
+npx -y basin-mcp@latest
 ```
+
+![MCP settings](mcp-settings.png)
 
 Make sure to add `API_KEY` to the environment settings of the MCP server to pass the API key to the MCP server.
 
-* Manual installation from `mcp_config.json` file
+### Playwright
+Basin relies on Playwright to run tests, so you may need to ensure it's installed on your computer before using Basin MCP for the first time. To install it, run the following command:
+
+```bash
+npm i -g playwright@latest
+```
+
+### Manual installation from `mcp_config.json` file
 
 Add the following to your `mcp_config.json`:
 
@@ -22,7 +31,7 @@ Add the following to your `mcp_config.json`:
   "mcpServers": {
     "basin-mcp": {
       "command": "npx",
-      "args": ["-y", "basin-mcp"],
+      "args": ["-y", "basin-mcp@latest"],
       "env": {
         "API_KEY": "your_api_key_here"
       }
@@ -56,6 +65,22 @@ The tool accepts following parameters:
 - `features`: List of features added/changed/removed per endpoint
 - `elements`: List of UI elements and their IDs per endpoint
 
+## Best Practices
+
+Help Basin execute tests more reliably and more accurately by following these guidelines:
+
+1. Keep Code Changes Small
+   - Basin tests are quite comprehensive, and so the tests can slow down exponentially as the changes it tests become increasingly complex. Keep each changes small and isolated to avoid performance issues. If you can, limit your changes to one or two endpoints at a time.
+
+2. Isolate Changes
+   - Avoid bundling unrelated changes together. Isolating updates helps Basin test more accurately and makes debugging easier when issues arise. This also helps your copilot interpret Basin's test results to respond with more accurate and appropriate fixes to your code.
+
+3. Declare Auth Requirements Explicitly
+   - If your changes require authentication:
+     - Clearly note it in your chat prompt, ideally with an endpoint for signing in or signing up.
+     - Provide either:
+       - Credentials (username and password) for an existing test account, or
+       - Instructions for creating a new user that meets your test conditions.
 
 ## Terms and Conditions
 
