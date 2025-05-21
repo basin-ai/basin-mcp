@@ -11,7 +11,7 @@ export const tools = {
         Always run this tool after each code generation to check the generated code to detect errors or unintended changes.
 
     How to use:
-    Provide: 1) Original user prompt, 2) List of affected files, 3) Generated code, 4) thread id / context id for this conversation, used to keep track of before and after changes, 5) URL of the running local server, 6) URLs of the new and changed endpoints, 7) credentials to use if testing requires authentication, 8) List of features added, changed, or removed per endpoint, 9) Id and names of each of the fields, elements, and buttons per each endpoint, both modified and unmodified. It's imperative that you provide the list of fields, elements, and buttons for each endpoint, both modified and unmodified, if they are available. Fields, elements, and buttons has to be uniquely identifiable by id and name. for 4), thread id, it should be unique id of the LLM chat thread, if that is not available, leave it empty`,
+    Provide: 1) Original user prompt, 2) List of affected files, 3) Generated code, 4) thread id / context id for this conversation, used to keep track of before and after changes, 5) URL of the running local server, 6) URLs of the new and changed endpoints, 7) credentials to use if testing requires authentication, 8) List of features added, changed, or removed per endpoint, 9) List of features that have submissions, AND name and/or id of the submit button element / field for those features (must include the element id or name), 10) Id and names of each of the fields, elements, and buttons per each endpoint, both modified and unmodified, 11) list of external API calls and 3rd party services the feature uses, 12) Structure of files in the project, 13) Lengthy and very well detailed description of related features and endpoints. It's imperative that you provide the list of fields, elements, and buttons for each endpoint, both modified and unmodified, if they are available. Fields, elements, and buttons has to be uniquely identifiable by id and name. for 4), thread id, it should be unique id of the LLM chat thread, if that is not available, leave it empty`,
     inputSchema: {
       type: 'object',
       properties: {
@@ -25,13 +25,6 @@ export const tools = {
             type: 'string',
           },
           description: 'list of affected file names from the code generation',
-        },
-        code: {
-          type: 'array',
-          items: {
-            type: 'string',
-          },
-          description: 'list of all the generated code',
         },
         threadId: {
           type: 'string',
@@ -47,6 +40,35 @@ export const tools = {
             type: 'string',
           },
           description: 'urls of the new and changed endpoints',
+        },
+        happyPathEndpoints: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description: 'urls of the endpoints the feature navigates to after happy path, and what triggers the happy path',
+        },
+        sadPathEndpoints: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description: 'urls of the endpoints the feature navigates to after sad path, and what triggers the sad path',
+        },
+        externalApiCalls: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description: 'list of external API calls and 3rd party services the feature uses, and what triggers each call',
+        },
+        fileStructure: {
+          type: 'array',
+          description: "Structure of files in the project"
+        },
+        featureDescription: {
+          type: "string",
+          description: "Description of the affected features, add, changed, unchanged, removed, what they do, what they navigate to, what they use, what they use for authentication"
         },
         credentials: {
           type: 'object',
@@ -66,6 +88,33 @@ export const tools = {
             type: 'string',
           },
           description: 'List of features added, changed, or removed per endpoint',
+        },
+        formSubmissions: {
+          type: 'array',
+          forms: {
+            type: 'object',
+            properties: {
+              featureDescription: {
+                type: 'string',
+              },
+              formName: {
+                type: 'string',
+              },
+              formTag: {
+                type: 'string',
+              },
+              submitButtonName: {
+                type: 'string',
+              },
+              submitButtonId: {
+                type: 'string',
+              },
+              submitButtonCode: {
+                type: 'string',
+              }
+            }
+          },
+          description: 'List of features that have submissions, AND name and/or id of the submit button element / field for those features',
         },
         elements: {
           type: 'array',
@@ -102,8 +151,15 @@ export const tools = {
           },
           description: 'List of element type, id, and names of each of the fields and buttons, and which endpoint it belongs to',
         },
+        code: {
+          type: 'array',
+          items: {
+            type: 'string',
+          },
+          description: 'list of all the generated code',
+        },
       },
-      required: ['prompt', 'serverUrl', 'endpoints', 'threadId'],
+      required: ['prompt', 'serverUrl', 'endpoints', 'code', 'files', 'features', 'formSubmissions', 'elements', 'externalApiCalls', 'featureDescription'],
     },
   }
 };
