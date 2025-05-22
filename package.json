@@ -1,6 +1,6 @@
 {
   "name": "basin-mcp",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Basin AI MCP tool for code quality and reliability testing",
   "type": "module",
   "main": "build/index.js",
@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.11.0",
-    "basin-executor-lib": "^0.2.9",
+    "basin-executor-lib": "^0.2.10",
     "playwright": "^1.52.0"
   },
   "devDependencies": {

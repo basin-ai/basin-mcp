@@ -21,7 +21,8 @@ const testPlanToLogs = (testPlan: TestPlan): any[] => {
 const checkCodeQuality = async (args: any) => {
   const threadId = args.threadId;
   const args_dump = JSON.stringify(args);
-  const testPlan = await getTestPlan(BASIN_API_KEY, args_dump, threadId, CURRENT_BASIN_PROTOCOL_VERSION, BASIN_HOST);
+  const testType = args && args.testType && args.testType === "general" ? "general" : "sanity";
+  const testPlan = await getTestPlan(BASIN_API_KEY, args_dump, threadId, CURRENT_BASIN_PROTOCOL_VERSION, testType, BASIN_HOST);
   
   if (!testPlan || !testPlan.testing_instructions) {
     return {
